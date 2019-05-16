@@ -3,7 +3,7 @@ from app import app
 import datetime
 
 @app.route('/')
-@app.route('/home')
-def home():
+@app.route('/feed')
+def feed():
     user = {'username': 'Aviciena Santoso'}
-    return render_template('home.html', user=user)
+    return render_template('feed.html', title="Feed - QRVA", user=user)
