@@ -37,4 +37,4 @@ def users():
 @app.route('/vote')
 def vote():
     user = {'username': 'Aviciena Santoso'}
-    return render_template('users.html', title="Edit Users - QRVA")
+    return render_template('vote.html', title="Edit Users - QRVA")

@@ -17,13 +17,13 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="voteDropdown">
           <a class="dropdown-item disabled" href="#"><b>Popular Verses</b></a>
-          <a class="dropdown-item" href="#">Yaseen / The Heart</a>
-          <a class="dropdown-item" href="#">Ar-Rahman (The Most Merciful)</a>
-          <a class="dropdown-item" href="#">Al-Waaqiah (The Inevitable)</a>
-          <a class="dropdown-item" href="#">Al-Mulk (The Dominion)</a>
-          <a class="dropdown-item" href="#">Al-A'la (The Most High)</a>
+          <a class="dropdown-item" href="/vote">Yaseen / The Heart</a>
+          <a class="dropdown-item" href="/vote">Ar-Rahman (The Most Merciful)</a>
+          <a class="dropdown-item" href="/vote">Al-Waaqiah (The Inevitable)</a>
+          <a class="dropdown-item" href="/vote">Al-Mulk (The Dominion)</a>
+          <a class="dropdown-item" href="/vote">Al-A'la (The Most High)</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Pick A Verse</a>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#pickModal">Pick A Chapter</a>
         </div>
       </li>
     </ul>    
@@ -32,10 +32,10 @@
             <a class="nav-link" href="/users">Edit Users</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Login</a>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Register</a>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#registerModal">Register</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/profile">Profile</a>
@@ -46,3 +46,93 @@
     </ul>
   </div>
 </nav>
+
+<!-- pick chapter modal -->
+<div class="modal fade" id="pickModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      <div class="row text-center no-gutters">
+      <div class="col-sm-8 px-1">
+            <select class="form-control" id="chapSelect">
+                <option>Pick a chapter...</option>
+                <option>1 > Yaseen / The Heart</option>
+                <option>2 > Ar-Rahman (The Most Merciful)</option>
+                <option>3 > Al-Waaqiah (The Inevitable)</option>
+                <option>4 > Al-Mulk (The Dominion)</option>
+                <option>5 > Al-A'la (The Most High)</option>
+            </select>
+        </div>
+        <div class="col-sm-2 px-1">
+            <button type="button" class="btn btn-info btn-block"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="col-sm-2 px-1">
+            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal"><i class="fa fa-window-close" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- login modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      <div class="px-3">
+      <div class="form-group row">
+        <label for="formLoginEmail">Email</label>
+        <input type="email" class="form-control" id="formLoginEmail" placeholder="name@example.com">
+      </div>
+      <div class="form-group row">
+        <label for="formLoginPassword">Password</label>
+        <input type="password" class="form-control" id="formLoginPassword" placeholder="Password">
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-sm-8 px-1">
+            <button type="button" class="btn btn-primary btn-block">Login</button>
+        </div>
+        <div class="col-sm-4 px-1">
+            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- register modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      <div class="px-3">
+      <div class="form-group row">
+        <label for="formRegisterEmail">Email</label>
+        <input type="email" class="form-control" id="formRegisterEmail" placeholder="name@example.com">
+      </div>
+      <div class="form-group row">
+        <label for="formRegisterPassOne">Password</label>
+        <input type="password" class="form-control" id="formRegisterPassOne" placeholder="Password">
+      </div>
+      <div class="form-group row">
+        <label for="formRegisterPassTwo">Repeat Password</label>
+        <input type="password" class="form-control" id="formRegisterPassTwo" placeholder="Repeat Password">
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-sm-8 px-1">
+            <button type="button" class="btn btn-primary btn-block">Login</button>
+        </div>
+        <div class="col-sm-4 px-1">
+            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
