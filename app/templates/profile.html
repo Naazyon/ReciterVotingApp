@@ -5,32 +5,70 @@
 {% block content %}
 
 <div class="py-2 mx-auto text-center">
-  <h1 class="display-4">Quran Reciter Voting App</h1>
-  <p class="lead">See what your fellow users are doing below...<br />Welcome to the feed!</p>
+  <h1 class="display-4">Welcome {{ user.name }}</h1>
+  <p class="lead">Edit your details below:</p>
 </div>
 
-<div class="card">
-  <div class="card-header">
-    <h5 class="card-title">Activity</h5>
-    <p class="card-text">Current time: 11:49PM WST</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">11:57PM - <b>Aviciena Santoso</b> just voted on ...</li>
-    <li class="list-group-item">11:56PM - <b>Yulianita Santoso</b> just voted on ...</li>
-    <li class="list-group-item">11:50PM - <b>Sauda Omar</b> just voted on ...</li>
-  </ul>
-</div>
+<table class="table table-striped table-bordered table-hover table-sm text-center ">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col", colspan="3">Profile Details</th>
+        </tr>
+    </thead>
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Information</th>
+        <th scope="col">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <th scope="row" class="align-middle">Name</th>
+        <td class="align-middle">{{ user.name }}</td>
+        <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm"><i class="fas fa-edit"></i></button></td>
+        </tr>
+        <tr>
+        <th scope="row" class="align-middle">Email</th>
+        <td class="align-middle">{{ user.email }}</td>
+        <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm"><i class="fas fa-edit"></i></button></td>
+        </tr>
+        <tr>
+        <th scope="row" class="align-middle">Last Online</th>
+        <td class="align-middle">{{ user.online }}</td>
+        <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm" disabled ><i class="fas fa-edit"></i></button></td>
+        </tr>
+        <tr>
+        <th scope="row" class="align-middle"># of Votes</th>
+        <td class="align-middle">{{ user.numVotes }}</td>
+        <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm" disabled ><i class="fas fa-edit"></i></button></td>
+        </tr>
+        <tr>
+        <th scope="row" class="align-middle"> of Reviews</th>
+        <td class="align-middle">{{ user.numReviews }}</td>
+        <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm" disabled ><i class="fas fa-edit"></i></button></td>
+        </tr>
+    </tbody>
+</table>
+
 <br />
+
 <div class="card">
-  <div class="card-header">
-    <h5 class="card-title">Current Statistics</h5>
-    <p class="card-text">Here are some statistics for today...</p>
+  <div class="card-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <button type="button" class="btn btn-block btn-primary" >Change password</i></button>
+            </div>
+            <div class="col-sm">
+                <button type="button" class="btn btn-block btn-secondary" >Clear posts & reviews</i></button>
+            </div>
+            <div class="col-sm">
+                <button type="button" class="btn btn-block btn-danger" >Delete account</i></button>
+            </div>
+        </div>
+    </div>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">x Votes Made</li>
-    <li class="list-group-item">x Votes Made</li>
-    <li class="list-group-item">x Votes Made</li>
-  </ul>
 </div>
 
 {% endblock %}   
