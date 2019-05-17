@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request, send_from_directory
 from app import app
 import datetime
 
@@ -38,3 +38,10 @@ def users():
 def vote():
     user = {'username': 'Aviciena Santoso'}
     return render_template('vote.html', title="Edit Users - QRVA")
+
+@app.route('/audio/<path:path>')
+def sendAudio(path):
+    return send_from_directory('static/audio/', path)
+
+if __name__ == "__main__":
+    app.run()

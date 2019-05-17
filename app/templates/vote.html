@@ -5,8 +5,50 @@
 {% block content %}
 
 <div class="py-2 mx-auto text-center">
-  <h1 class="display-4">Surah</h1>
+  <h1 class="display-4">Surah An-Nas</h1>
   <p class="lead">Vote Below!</p>
-</div>
+  
+  <table class="table table-striped table-bordered table-hover table-sm text-center ">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Reciter</th>
+      <th scope="col">Listen</th>
+      <th scope="col" colspan="2">Vote</th>
+      <th scope="col">Review</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <th scope="row" class="align-middle">Mishary</th>
+        <td class="align-middle"><audio controls class="full-width-audio" >
+            <source class="d-block" src="/audio/afasy/114.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio></td>
+        <td class="align-middle"><button type="button" class="btn btn-success btn-block btn-sm"><i class="fas fa-thumbs-up"></i></button></td>
+        <td class="align-middle"><button type="button" class="btn btn-danger btn-block btn-sm"><i class="fas fa-thumbs-down"></i></button></td>
+        <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm"><i class="fas fa-star"></i></button></td>
+    </tr>
+    </tbody>
+  </table>
+  
+  <br />
+  
+  <table class="table table-striped table-bordered table-hover table-sm text-center ">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User</th>
+      <th scope="col">Content</th>
+      <th scope="col">Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <th scope="row" class="align-middle">Mishary</th>
+        <td class="align-middle">l Know Who You Are is the brilliant tale of two stories. One is about Aimee Sinclair—well-known actress on the verge of being full-on famous. If you saw her, you’d think you knew her. One day towards the near-end of her shoot on her latest film, Aimee comes home from filming to find her husband’s cell phone and wallet on the dining room table. He never goes anywhere without them. But he’s nowhere to be found. She’s not too concerned—they had a huge fight the night before. They both said things they didn’t mean. He might have done things he didn’t mean, things she can’t forget. Even though she has a history of supposedly forgetting. After all, she’s a very good actress.</td>
+        <td class="align-middle"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
 
 {% endblock %}   
