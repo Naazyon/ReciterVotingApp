@@ -1,55 +1,72 @@
-<!DOCTYPE html>
-
-{% extends "base.html" %}
-
-{% block content %}
+<!DOCTYPE html> {% extends "base.html" %} {% block content %}
 
 <div class="py-2 mx-auto text-center">
-  <h1 class="display-4">Surah An-Nas</h1>
-  <p class="lead">Vote Below!</p>
-  
-  <table class="table table-striped table-bordered table-hover table-sm text-center ">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Reciter</th>
-      <th scope="col">Listen</th>
-      <th scope="col" colspan="2">Vote</th>
-      <th scope="col">Review</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <th scope="row" class="align-middle">Mishary</th>
-        <td class="align-middle"><audio controls class="full-width-audio" >
-            <source class="d-block" src="/audio/afasy/114.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio></td>
-        <td class="align-middle"><button type="button" class="btn btn-success btn-block btn-sm"><i class="fas fa-thumbs-up"></i></button></td>
-        <td class="align-middle"><button type="button" class="btn btn-danger btn-block btn-sm"><i class="fas fa-thumbs-down"></i></button></td>
-        <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm"><i class="fas fa-star"></i></button></td>
-    </tr>
-    </tbody>
-  </table>
-  
-  <br />
-  
-  <table class="table table-striped table-bordered table-hover table-sm text-center ">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">User</th>
-      <th scope="col">Content</th>
-      <th scope="col">Rating</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td class="align-middle row" colspan="3">
-        tased
-        </td>
-        
-    </tr>
-    </tbody>
-  </table>
-  </div>
+    <h1 class="display-4">Surah An-Nas</h1>
+    <p class="lead">Vote Below!</p>
+</div>
 
-{% endblock %}   
+<table class="table table-striped table-bordered table-hover table-sm text-center ">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Reciter</th>
+            <th scope="col">Listen</th>
+            <th scope="col" colspan="2">Vote</th>
+            <th scope="col">Review</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row" class="align-middle">Mishary</th>
+            <td class="align-middle">
+                <audio controls class="full-width-audio">
+                    <source class="d-block" src="/audio/afasy/114.mp3" type="audio/mpeg"> Your browser does not support the audio element.
+                </audio>
+            </td>
+            <td class="align-middle">
+                <button type="button" class="btn btn-success btn-block btn-sm"><i class="fas fa-thumbs-up"></i></button>
+            </td>
+            <td class="align-middle">
+                <button type="button" class="btn btn-danger btn-block btn-sm"><i class="fas fa-thumbs-down"></i></button>
+            </td>
+            <td class="align-middle">
+                <button type="button" class="btn btn-primary btn-block btn-sm"><i class="fas fa-star"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br />
+
+<table class="table table-striped table-bordered align-middle">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Reviews</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <div class="row no-gutters">
+                    <div class="col-sm-3 border border-light text-center">
+                        <div class="px-2 py-1">
+                            <h5>{{user.name}}</h5>
+                            <p>Posted on {{user.online}}</p>
+                        </div>
+                        </div>
+                    <div class="col-sm-6 px-1 border border-light"><div class="px-1 py-1">
+                        <p>Full of photographs, souvenirs and trinkets from around the world, the Kumar house was nothing short of a mini-museum of the flavours from the world. There were preserve-me glow balls from places that no longer existed- like the great barrier reef or the Hawaiian Islands, along with memory-cubes, that contained snap-shot holograms of places that the residents had been to and wanted to revisit virtually anytime they wanted. Happy photographs of family members, still framed, instead of the now common digital screen-shots that kept changing as per calendar events, awards and certificates for varied accomplishments, both professional and personal and signs of a well-read occupant were all visible. The house, to say the least, had character and spoke for itself, even though, ironically, most of its members did not as much. <br /><br />
+                        
+                        Ghoomophiro is the story of two sisters Nitika and Kritika and their exciting much-awaited trip with their family. Both of them are travelers and during this trip, family discusses everything about their travel tales. <br /> <br />
+                        
+                        With its vivid descriptions, uplifting adventures, Ghoomophiro is a journey that everyone can live with and can relate to and can inspire anyone to pack the bags to explore.</p>
+                    </div></div>
+                    <div class="col-sm-3 px-1 border border-light text-center align-middle"><div class="px-1 py-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div></div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}
