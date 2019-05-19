@@ -1,5 +1,8 @@
-from flask import render_template, request, send_from_directory
+from flask import render_template, request, send_from_directory, redirect, url_for
 from app import app
+from app.models import User, Feed, Chapter, Review, Clip, Vote
+from flask_login import current_user, login_user, logout_user
+from werkzeug.security import generate_password_hash
 import datetime
 
 timeNow = datetime.datetime.now()
@@ -16,40 +19,99 @@ defaultUser = {
 }
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 @app.route('/feed')
 def feed():
-    return render_template('feed.html', title="Feed - QRVA")
+    if(request):
+        print(request.form)
+    if current_user.is_authenticated:
+        currentUser = current_user
+    return render_template('feed.html', title="Feed - QRVA", user=currentUser)
 
-@app.route('/overview')
+@app.route('/overview', methods=["GET", "POST"])
 def overview():
-    user = {'username': 'Aviciena Santoso'}
-    return render_template('overview.html', title="Overview - QRVA")
+    if(request):
+        print(request.form)
+    if current_user.is_authenticated:
+        currentUser = current_user
+    return render_template('overview.html', title="Overview - QRVA", user=currentUser)
 
-@app.route('/profile')
+@app.route('/profile', methods=["GET", "POST"])
 def profile():
-    user = {'username': 'Aviciena Santoso'}
-    return render_template('profile.html', title="Profile - QRVA", user=defaultUser)
+    if(request):
+        print(request.form)
+    if current_user.is_authenticated:
+        currentUser = current_user
+    return render_template('profile.html', title="Profile - QRVA", user=currentUser)
 
-@app.route('/users')
+@app.route('/users', methods=["GET", "POST"])
 def users():
-    user = {'username': 'Aviciena Santoso'}
-    return render_template('users.html', title="Edit Users - QRVA")
+    if(request):
+        print(request.form)
+    if current_user.is_authenticated:
+        currentUser = current_user
+    return render_template('users.html', title="Edit Users - QRVA", user=currentUser)
 
-@app.route('/vote/<int:chapter>')
+@app.route('/vote/<int:chapter>', methods=["GET", "POST"])
 def vote(chapter):
-    user = {'username': 'Aviciena Santoso'}
+    if(request):
+        print(request.form)
+    if current_user.is_authenticated:
+        currentUser = current_user
     if chapter >= 100:
         chapter = str(chapter)
     elif chapter >= 10:
         chapter = f'0{chapter}'
     else:
         chapter = f'00{chapter}'
-    return render_template('vote.html', title="Vote - QRVA", chapter = chapter, user = defaultUser)
+    return render_template('vote.html', title="Vote - QRVA", chapter = chapter, user=currentUser)
 
 @app.route('/audio/<path:path>')
 def sendAudio(path):
+    if(request):
+        print(request.form)
     return send_from_directory('static/audio/', path)
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if(request):
+        print(request.form)
+        email = request.form['email']
+        password = request.form['password']
+        if current_user.is_authenticated:
+            return redirect(url_for('feed'))
+        currentUser = User.query.filter_by(email=email).first()
+        if currentUser is None:
+            print('Email not found')
+            return redirect(url_for('feed'))
+        if not currentUser.check_password(password):
+            print('Password incorrect')
+            return redirect(url_for('feed'))
+        login_user(currentUser)
+        return redirect(url_for('feed'))
+    else:
+        return redirect(url_for('feed'))
+
+@app.route('/logout', methods=["GET", "POST"])
+def logout():
+    logout_user()
+    print("Logged out.")
+    return redirect(url_for('feed'))
+
+@app.route('/register', methods=["GET", "POST"])
+def register():
+    if(request):
+        print(request.form)
+        email = request.form['email']
+        password = request.form['password']
+        permissions = "user"
+        name = "John Doe
+        user = {email: email,
+        password: password,
+        permissions: permissions,
+        db.session.add(user)
+        db.session.commit()
+    return redirect(url_for('feed'))
 
 if __name__ == "__main__":
     app.run()
