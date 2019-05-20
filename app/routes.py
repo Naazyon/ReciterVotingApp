@@ -12,7 +12,8 @@ def home():
 
 @app.route('/userslist')
 def usersList():
-  return render_template('usersList.html')
+  users = User.query.all()
+  return render_template('usersList.html', users=users)
 
 @app.route('/chapterslist')
 def chaptersList():
@@ -26,7 +27,7 @@ def recitersList():
 def votesList():
   return render_template('votesList.html')
 
-@app.route('/user')
+@app.route('/user', methods=['POST'])
 def user():
   if(request.form):
     print(request.form)
@@ -49,18 +50,10 @@ def user():
       if id is not None and id != 0:
         user = User.query.get(id)
         if user:
-          db.session.delete(user)
-          permissions = request.form["permissions"]
-          name = request.form["name"]
-          email = request.form["email"]
-          password = generate_password_hash(request.form["password"])
-          user = User(
-            permissions = permissions,
-            name = name,
-            email = email,
-            password = password
-          )
-          db.session.add(user)
+          user.permissions = request.form["permissions"]
+          user.name = request.form["name"]
+          user.email = request.form["email"]
+          user.password = generate_password_hash(request.form["password"]) or user.password
           db.session.commit()
           return redirect('/')
     if(request.form["type"] == "DELETE"):

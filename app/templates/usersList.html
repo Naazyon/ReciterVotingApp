@@ -14,43 +14,44 @@
         </tr>
     </thead>
     <tbody>
+        {% for user in users %}
         <tr>
-            <th scope="row" class="align-middle">1</th>
-            <td class="align-middle">admin</td>
-            <td class="align-middle">Aviciena Santoso</td>
-            <td class="align-middle">22242172@student.uwa.edu.au</td>
+            <th scope="row" class="align-middle">{{ user.id }}</th>
+            <td class="align-middle">{{ user.permissions }}</td>
+            <td class="align-middle">{{ user.name }}</td>
+            <td class="align-middle">{{ user.email }}</td>
             <td class="align-middle">
-                <button type="button" class="btn btn-primary btn-block btn-sm" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-primary btn-block btn-sm" data-toggle="modal" data-target="#updateModal{{ user.id }}"><i class="fas fa-edit"></i></button>
             </td>
             <td class="align-middle">
-                <button type="button" class="btn btn-danger btn-block btn-sm" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-danger btn-block btn-sm" data-toggle="modal" data-target="#deleteModal{{ user.id }}"><i class="fas fa-trash-alt"></i></button>
             </td>
         </tr>
 
-        <!-- edit user modal -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- update user modal -->
+        <div class="modal fade" id="updateModal{{ user.id }}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="px-3">
                             <div class="form-group row">
-                                <b>Editing User ID 1</b>
+                                <b>Updating User ID {{ user.id }}</b>
                             </div>
                             <div class="form-group row">
-                                <label for="editEmail">Email</label>
-                                <input type="email" class="form-control" id="editEmail" placeholder="name@example.com">
+                                <label for="updateEmail{{ user.id }}">Email</label>
+                                <input type="email" class="form-control" id="updateEmail{{ user.id }}" value="{{ user.email }}">
                             </div>
                             <div class="form-group row">
-                                <label for="editPassword">Password</label>
-                                <input type="password" class="form-control" id="editPassword" placeholder="Password">
+                                <label for="updatePassword{{ user.id }}">Password</label>
+                                <input type="password" class="form-control" id="updatePassword{{ user.id }}">
                             </div>
                             <div class="form-group row">
-                                <label for="editName">Full Name</label>
-                                <input type="text" class="form-control" id="editName" placeholder="John Doe">
+                                <label for="updateName{{ user.id }}">Full Name</label>
+                                <input type="text" class="form-control" id="updateName{{ user.id }}" value="{{ user.name }}">
                             </div>
                             <div class="form-group row">
-                                <label for="editPermissions">Permissions</label>
-                                <select class="form-control" id="editPermissions">
+                                <label for="updatePermissions{{ user.id }}">Permissions</label>
+                                <select class="form-control" id="updatePermissions{{ user.id }}" value="{{ user.permissions }}">
                                     <option>user</option>
                                     <option>admin</option>
                                 </select>
@@ -58,7 +59,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-8 px-1">
-                                    <button type="button" onclick="editUser()" class="btn btn-primary btn-block" data-dismiss="modal">Edit User</button>
+                                    <button type="button" onclick="updateUser({{ user.id }})" class="btn btn-primary btn-block" data-dismiss="modal">update User</button>
                                 </div>
                                 <div class="col-sm-4 px-1">
                                     <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
@@ -72,14 +73,14 @@
         </div>
 
         <!-- delete user modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="deleteModal{{ user.id }}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="px-3">
                             <div class="row">
                                 <div class="col-sm-8 px-1">
-                                    <button type="button" onclick="deleteUser()" class="btn btn-danger btn-block" data-dismiss="modal">Delete User</button>
+                                    <button type="button" onclick="deleteUser({{ user.id }})" class="btn btn-danger btn-block" data-dismiss="modal">Delete User</button>
                                 </div>
                                 <div class="col-sm-4 px-1">
                                     <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
@@ -90,6 +91,8 @@
                 </div>
             </div>
         </div>
+
+        {% endfor %}
     </tbody>
 </table>
 
@@ -133,6 +136,52 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    function createUser() {
+        jQuery.ajax({
+            type: "POST",
+            url: "/user",
+            data: {
+                type: "CREATE",
+                permissions: $("#createPermissions").val(),
+                name: $("#createName").val(),
+                email: $("#createEmail").val(),
+                password: $("#createPassword").val(),
+            }
+        });
+        alert("Attempted to create user");
+        document.location.reload();
+    }
 
+    function deleteUser(uid) {
+        jQuery.ajax({
+            type: "POST",
+            url: "/user",
+            data: {
+                type: "DELETE",
+                id: uid
+            }
+        });
+        alert("Attempted to delete user");
+        document.location.reload();
+    }
+
+    function updateUser(uid) {
+        jQuery.ajax({
+            type: "POST",
+            url: "/user",
+            data: {
+                type: "UPDATE",
+                id: uid,
+                permissions: $("#updatePermissions"+uid).val(),
+                name: $("#updateName"+uid).val(),
+                email: $("#updateEmail"+uid).val(),
+                password: $("#updatePassword"+uid).val(),
+            }
+        });
+        alert("Attempted to update user");
+        document.location.reload();
+    }
+</script>
 
 {% endblock %}
