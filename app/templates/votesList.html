@@ -1,0 +1,171 @@
+<!DOCTYPE html> {% extends "base.html" %} {% block content %}
+
+<button type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#createModal">Create Vote</button>
+<br />
+
+<table class="table table-striped table-bordered table-hover table-sm text-center ">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Vote ID</th>
+            <th scope="col">Reciter</th>
+            <th scope="col">Chapter</th>
+            <th scope="col">User</th>
+            <th scope="col" colspan="2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for vote in votes %}
+        <tr>
+            <th scope="row" class="align-middle">{{ vote.id }}</th>
+            <td class="align-middle">{{ vote.reciter }}</td>
+            <td class="align-middle">{{ vote.chapter }}</td>
+            <td class="align-middle">{{ vote.user }}</td>
+            <td class="align-middle">
+                <button type="button" class="btn btn-primary btn-block btn-sm" data-toggle="modal" data-target="#updateModal{{ vote.id }}"><i class="fas fa-edit"></i></button>
+            </td>
+            <td class="align-middle">
+                <button type="button" class="btn btn-danger btn-block btn-sm" data-toggle="modal" data-target="#deleteModal{{ vote.id }}"><i class="fas fa-trash-alt"></i></button>
+            </td>
+        </tr>
+
+        <!-- update vote modal -->
+        <div class="modal fade" id="updateModal{{ vote.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="px-3">
+                            <div class="form-group row">
+                                <b>Updating Vote ID {{ vote.id }}</b>
+                            </div>
+                            <div class="form-group row">
+                                <label for="updateUser{{ vote.id }}">User</label>
+                                <input type="user" class="form-control" id="updateUser{{ vote.id }}" value="{{ vote.user }}">
+                            </div>
+                            <div class="form-group row">
+                                <label for="updateChapter{{ vote.id }}">Chapter</label>
+                                <input type="text" class="form-control" id="updateChapter{{ vote.id }}" value="{{ vote.chapter }}">
+                            </div>
+                            <div class="form-group row">
+                                <label for="updateReciter{{ vote.id }}">Reciter</label>
+                                <input type="text" class="form-control" id="updateReciter{{ vote.id }}" value="{{ vote.reciter }}">
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-8 px-1">
+                                    <button type="button" onclick="updateVote({{ vote.id }})" class="btn btn-primary btn-block" data-dismiss="modal">update Vote</button>
+                                </div>
+                                <div class="col-sm-4 px-1">
+                                    <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- delete vote modal -->
+        <div class="modal fade" id="deleteModal{{ vote.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="px-3">
+                            <div class="row">
+                                <div class="col-sm-8 px-1">
+                                    <button type="button" onclick="deleteVote({{ vote.id }})" class="btn btn-danger btn-block" data-dismiss="modal">Delete Vote</button>
+                                </div>
+                                <div class="col-sm-4 px-1">
+                                    <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- create vote modal -->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="px-3">
+                    <div class="form-group row">
+                        <label for="createUser">User</label>
+                        <input type="user" class="form-control" id="createUser">
+                    </div>
+                    <div class="form-group row">
+                        <label for="createChapter">Chapter</label>
+                        <input type="text" class="form-control" id="createChapter">
+                    </div>
+                    <div class="form-group row">
+                        <label for="createReciter">Reciter</label>
+                        <input type="text" class="form-control" id="createReciter">
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-8 px-1">
+                            <button type="button" onclick="createVote()" class="btn btn-primary btn-block" data-dismiss="modal">Create Vote</button>
+                        </div>
+                        <div class="col-sm-4 px-1">
+                            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function createVote() {
+        jQuery.ajax({
+            type: "POST",
+            url: "/vote",
+            data: {
+                type: "CREATE",
+                reciter: $("#createReciter").val(),
+                chapter: $("#createChapter").val(),
+                user: $("#createUser").val(),
+            }
+        });
+        alert("Attempted to create vote");
+        document.location.reload();
+    }
+
+    function deleteVote(uid) {
+        jQuery.ajax({
+            type: "POST",
+            url: "/vote",
+            data: {
+                type: "DELETE",
+                id: uid
+            }
+        });
+        alert("Attempted to delete vote");
+        document.location.reload();
+    }
+
+    function updateVote(uid) {
+        jQuery.ajax({
+            type: "POST",
+            url: "/vote",
+            data: {
+                type: "UPDATE",
+                id: uid,
+                reciter: $("#updateReciter"+uid).val(),
+                chapter: $("#updateChapter"+uid).val(),
+                user: $("#updateUser"+uid).val(),
+            }
+        });
+        alert("Attempted to update vote");
+        document.location.reload();
+    }
+</script>
+
+{% endblock %}
