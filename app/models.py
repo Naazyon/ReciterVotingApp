@@ -62,9 +62,10 @@ class Clip(db.Model):
 
 class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    clip_id = db.Column(db.Integer, db.ForeignKey('clip.id'))
-    positive = db.Column(db.Boolean)
+    reciter = db.Column(db.Integer, index=True)
+    chapter = db.Column(db.Integer, index=True)
+    user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    upvote = db.Column(db.Integer)
     
     def __repr__(self):
         return f'<Vote {id}>'

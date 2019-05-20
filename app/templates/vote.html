@@ -1,7 +1,9 @@
 <!DOCTYPE html> {% extends "base.html" %} {% block content %}
 
+
+
 <div class="py-2 mx-auto text-center">
-    <h1 class="display-4">Surah An-Nas</h1>
+    <h1 class="display-4">Chapter {{ chapter.id }} - {{ chapter.name }} ({{ chapter.translation }})</h1>
     <p class="lead">Vote Below!</p>
 </div>
 
@@ -15,23 +17,27 @@
         </tr>
     </thead>
     <tbody>
+        {% with reciters = [["Mishary Rashid", "mishary", 1],["Saad Al-Ghamdi", "ghamdi", 2],["Abdul Basit", "abasit", 3],["Al-Shuraim", "shuraim", 4],["As-Sudais", "sudais", 5]]%}
+        {% for reciter in reciters %}
         <tr>
-            <th scope="row" class="align-middle">Mishary</th>
+            <th scope="row" class="align-middle">{{reciter[0]}}</th>
             <td class="align-middle">
                 <audio controls class="full-width-audio">
-                    <source class="d-block" src="/audio/afasy/114.mp3" type="audio/mpeg"> Your browser does not support the audio element.
+                    <source class="d-block" src="/audio/{{reciter[1]}}/{{chapter.id}}.mp3" type="audio/mpeg"> Your browser does not support the audio element.
                 </audio>
             </td>
             <td class="align-middle">
-                <button type="button" class="btn btn-success btn-block btn-sm"><i class="fas fa-thumbs-up"></i></button>
+                <button type="button" class="btn btn-success btn-block btn-sm" onclick="vote({{reciter[2]}},{{chapter.id}},{{current_user.id}},1)"><i class="fas fa-thumbs-up"></i></button>
             </td>
             <td class="align-middle">
-                <button type="button" class="btn btn-danger btn-block btn-sm"><i class="fas fa-thumbs-down"></i></button>
+                <button type="button" class="btn btn-danger btn-block btn-sm" onclick="vote({{reciter[2]}},{{chapter.id}},{{current_user.id}},-1)"><i class="fas fa-thumbs-down"></i></button>
             </td>
             <td class="align-middle">
                 <button type="button" class="btn btn-primary btn-block btn-sm"><i class="fas fa-star"></i></button>
             </td>
         </tr>
+        {% endfor %}
+        {% endwith %}
     </tbody>
 </table>
 
@@ -49,8 +55,8 @@
                 <div class="row no-gutters">
                     <div class="col-sm-3 border border-light text-center">
                         <div class="px-2 py-1">
-                            <h5>{{user.name}}</h5>
-                            <p>Posted on {{user.online}}</p>
+                            <h5>{{current_user.name}}</h5>
+                            <p>Posted on {{current_user.online}}</p>
                         </div>
                         </div>
                     <div class="col-sm-6 px-1 border border-light"><div class="px-1 py-1">
@@ -68,5 +74,17 @@
         </tr>
     </tbody>
 </table>
+
+<script type="text/javascript">
+    function vote(reciter, chapterId, userId, upvote) {
+      jQuery.ajax({
+          type: "POST",
+          url: '/vote',
+          data: {reciter: reciter, chapter: chapterId, user:userId, upvote:upvote}
+      });
+      alert("Vote submitted.");
+      document.location.reload();
+    };
+</script>
 
 {% endblock %}

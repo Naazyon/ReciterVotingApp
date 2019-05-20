@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="py-2 mx-auto text-center">
-  <h1 class="display-4">Welcome {{ user.name }}</h1>
+  <h1 class="display-4">Welcome {{ current_user.name }}</h1>
   <p class="lead">Edit your details below:</p>
 </div>
 
@@ -25,29 +25,20 @@
     <tbody>
         <tr>
         <th scope="row" class="align-middle">Name</th>
-        <td class="align-middle">{{ user.name }}</td>
+        <td class="align-middle">{{ current_user.name }}</td>
         <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm"><i class="fas fa-edit"></i></button></td>
         </tr>
         <tr>
         <th scope="row" class="align-middle">Email</th>
-        <td class="align-middle">{{ user.email }}</td>
+        <td class="align-middle">{{ current_user.email }}</td>
         <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm"><i class="fas fa-edit"></i></button></td>
         </tr>
         <tr>
         <th scope="row" class="align-middle">Last Online</th>
-        <td class="align-middle">{{ user.online }}</td>
+        <td class="align-middle">{{ current_user.online }}</td>
         <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm" disabled ><i class="fas fa-edit"></i></button></td>
         </tr>
         <tr>
-        <th scope="row" class="align-middle"># of Votes</th>
-        <td class="align-middle">{{ user.numVotes }}</td>
-        <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm" disabled ><i class="fas fa-edit"></i></button></td>
-        </tr>
-        <tr>
-        <th scope="row" class="align-middle"> of Reviews</th>
-        <td class="align-middle">{{ user.numReviews }}</td>
-        <td class="align-middle"><button type="button" class="btn btn-primary btn-block btn-sm" disabled ><i class="fas fa-edit"></i></button></td>
-        </tr>
     </tbody>
 </table>
 
