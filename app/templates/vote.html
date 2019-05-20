@@ -1,7 +1,5 @@
 <!DOCTYPE html> {% extends "base.html" %} {% block content %}
 
-
-
 <div class="py-2 mx-auto text-center">
     <h1 class="display-4">Chapter {{ chapter.id }} - {{ chapter.name }} ({{ chapter.translation }})</h1>
     <p class="lead">Vote Below!</p>
@@ -17,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        {% with reciters = [["Mishary Rashid", "mishary", 1],["Saad Al-Ghamdi", "ghamdi", 2],["Abdul Basit", "abasit", 3],["Al-Shuraim", "shuraim", 4],["As-Sudais", "sudais", 5]]%}
+        {% with reciters = [["Mishary Rashid", "mishary", 1],["Saad Al-Ghamdi", "ghamdi", 2],["Abdul Basit", "abasit", 3],["Al-Shuraim", "shuraim", 4],["As-Sudais", "sudais", 5]] %}
         {% for reciter in reciters %}
         <tr>
             <th scope="row" class="align-middle">{{reciter[0]}}</th>
@@ -27,13 +25,46 @@
                 </audio>
             </td>
             <td class="align-middle">
-                <button type="button" class="btn btn-success btn-block btn-sm" onclick="vote({{reciter[2]}},{{chapter.id}},{{current_user.id}},1)"><i class="fas fa-thumbs-up"></i></button>
+            <button type="button" class="btn btn-success btn-block btn-sm" onclick = "vote({{reciter[2]}}, {{chapter.id}}, {{current_user.id}}, 1)" ><i class="fas fa-thumbs-up"></i></button>
             </td>
             <td class="align-middle">
-                <button type="button" class="btn btn-danger btn-block btn-sm" onclick="vote({{reciter[2]}},{{chapter.id}},{{current_user.id}},-1)"><i class="fas fa-thumbs-down"></i></button>
+                <button type="button" class="btn btn-danger btn-block btn-sm" onclick="vote({{reciter[2]}},{{chapter.id}},{{current_user.id}},-1)" ><i class="fas fa-thumbs-down"></i></button>
             </td>
             <td class="align-middle">
-                <button type="button" class="btn btn-primary btn-block btn-sm"><i class="fas fa-star"></i></button>
+                <button type="button" class="btn btn-primary btn-block btn-sm" data-toggle="modal" data-target="#reviewModal{{reciter[2]}}"><i class="fas fa-star"></i></button>
+                <!-- Review Modal -->
+                <div class="modal fade" id="reviewModal{{reciter[2]}}" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                      <div class="px-3">
+                      <div class="form-group row">
+                        <label for="formReviewContent{{reciter[2]}}">Content</label>
+                        <textarea class="form-control" id="formReviewContent{{reciter[2]}}" rows="5"></textarea>
+                      </div>
+                      <div class="form-group row">
+                        <label for="formReviewRating{{reciter[2]}}">Stars</label>
+                        <select class="form-control" id="formReviewRating{{reciter[2]}}">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                      <hr />
+                      <div class="row">
+                        <div class="col-sm-8 px-1">
+                            <button type="button" onclick="submitReview({{reciter[2]}})" class="btn btn-primary btn-block" data-dismiss="modal">Submit Review!</button>
+                        </div>
+                        <div class="col-sm-4 px-1">
+                            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+                        </div>
+                      </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
             </td>
         </tr>
         {% endfor %}
@@ -78,11 +109,20 @@
 <script type="text/javascript">
     function vote(reciter, chapterId, userId, upvote) {
       jQuery.ajax({
-          type: "POST",
-          url: '/vote',
-          data: {reciter: reciter, chapter: chapterId, user:userId, upvote:upvote}
+        type: "POST",
+        url: window.location.pathname,
+        data: {reciter: reciter, chapter: chapterId, user:userId, upvote:upvote}
       });
       alert("Vote submitted.");
+      document.location.reload();
+    };
+    function submitReview(reciter) {
+      jQuery.ajax({
+        type: "POST",
+        url: "/review",
+        data: {reciter: reciter, chapter: {{chapter.id}}, user:{{current_user.id}}, content: $("#formReviewContent" + reciter).val(), rating: $("#formReviewRating" + reciter).val()}
+      });
+      alert("Review submitted.");
       document.location.reload();
     };
 </script>
