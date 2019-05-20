@@ -28,67 +28,68 @@ def votesList():
 
 @app.route('/user')
 def user():
-    if(request.form):
-        print(request.form)
-          if(request.form["type"] == "CREATE"):
-            permissions = request.form["permissions"]
-            name = request.form["name"]
-            email = request.form["email"]
-            password = generate_password_hash(request.form["password"])
-            user = User(
-              permissions = permissions,
-              name = name,
-              email = email,
-              password = password
-            )
-            db.session.add(user)
-            db.session.commit()
-            return redirect('/')
-          if(request.form["type"] == "UPDATE"):
-            id = request.form["id"]
-            if id is not None and id != 0:
-                user = User.query.get(id)
-                if user:
-                    db.session.delete(user)
-                    permissions = request.form["permissions"]
-                    name = request.form["name"]
-                    email = request.form["email"]
-                    password = generate_password_hash(request.form["password"])
-                    user = User(
-                      permissions = permissions,
-                      name = name,
-                      email = email,
-                      password = password
-                    )
-                    db.session.add(user)
-                    db.session.commit()
-          if(request.form["type"] == "DELETE"):
-            id = request.form["id"]
-            if id is not None and id != 0:
-                user = User.query.get(id)
-                if user:
-                    db.session.delete(user)
-                    db.session.commit()
-                return redirect('/')
-    return "invalid request"
+  if(request.form):
+    print(request.form)
+    if(request.form["type"] == "CREATE"):
+      permissions = request.form["permissions"]
+      name = request.form["name"]
+      email = request.form["email"]
+      password = generate_password_hash(request.form["password"])
+      user = User(
+        permissions = permissions,
+        name = name,
+        email = email,
+        password = password
+      )
+      db.session.add(user)
+      db.session.commit()
+      return redirect('/')
+    if(request.form["type"] == "UPDATE"):
+      id = request.form["id"]
+      if id is not None and id != 0:
+        user = User.query.get(id)
+        if user:
+          db.session.delete(user)
+          permissions = request.form["permissions"]
+          name = request.form["name"]
+          email = request.form["email"]
+          password = generate_password_hash(request.form["password"])
+          user = User(
+            permissions = permissions,
+            name = name,
+            email = email,
+            password = password
+          )
+          db.session.add(user)
+          db.session.commit()
+          return redirect('/')
+    if(request.form["type"] == "DELETE"):
+      id = request.form["id"]
+      if id is not None and id != 0:
+        user = User.query.get(id)
+        if user:
+          db.session.delete(user)
+          db.session.commit()
+          return redirect('/')
+  return "invalid request"
 
 @app.route('/chapter')
 def chapter():
-    if(request.form):
-        print(request.form)
-    return "invalid request"
+  if(request.form):
+    print(request.form)
+  return "invalid request"
 
 @app.route('/reciter')
 def reciter():
-    if(request.form):
-        print(request.form)
-    return "invalid request"
+  if(request.form):
+    print(request.form)
+  return "invalid request"
 
 @app.route('/vote')
 def vote():
-    if(request.form):
-        print(request.form)
-    return "invalid request"
+  if(request.form):
+    print(request.form)
+  return "invalid request"
 
 """
 timeNow = datetime.datetime.now()
@@ -98,132 +99,132 @@ quranChapters = [ { "id": 1, "name": "Al-Fatihah", "translation": "The Opening" 
 @app.route('/', methods=["GET", "POST"])
 @app.route('/feed')
 def feed():
-    if(request):
-        print(request.form)
-    return render_template('feed.html', title="Feed - QRVA")
+  if(request):
+    print(request.form)
+  return render_template('feed.html', title="Feed - QRVA")
 
 @app.route('/overview', methods=["GET", "POST"])
 def overview():
-    if(request):
-        print(request.form)
-    return render_template('overview.html', title="Overview - QRVA")
+  if(request):
+    print(request.form)
+  return render_template('overview.html', title="Overview - QRVA")
 
 @app.route('/profile', methods=["GET", "POST"])
 def profile():
-    if(request):
-        print(request.form)
-    return render_template('profile.html', title="Profile - QRVA")
+  if(request):
+    print(request.form)
+  return render_template('profile.html', title="Profile - QRVA")
 
 @app.route('/users', methods=["GET", "POST"])
 def users():
-    if(request):
-        print(request.form)
-    return render_template('users.html', title="Edit Users - QRVA")
+  if(request):
+    print(request.form)
+  return render_template('users.html', title="Edit Users - QRVA")
 
 @app.route('/chapters', methods=["GET", "POST"])
 def chapters():
-    if(request):
-        print(request.form)
-    return render_template('chapters.html', title="Edit Chapters - QRVA")
+  if(request):
+    print(request.form)
+  return render_template('chapters.html', title="Edit Chapters - QRVA")
 
 @app.route('/vote/<int:chapter>', methods=["GET", "POST"])
 def vote(chapter):
-    if(request.form):
-        print(request.form)
-        currentVote = Vote(reciter = request.form["reciter"],
-        chapter = request.form["chapter"],
-        user = request.form["user"],
-        upvote = request.form["upvote"])
-        db.session.add(currentVote)
-        db.session.commit()
-    currentChapter = quranChapters[chapter-1]
-    currentReviews = Review.query.filter_by(chapter=chapter).all()
-    return render_template('vote.html', title="Vote - QRVA", chapter = currentChapter, reviews = currentReviews)
+  if(request.form):
+    print(request.form)
+    currentVote = Vote(reciter = request.form["reciter"],
+    chapter = request.form["chapter"],
+    user = request.form["user"],
+    upvote = request.form["upvote"])
+    db.session.add(currentVote)
+    db.session.commit()
+  currentChapter = quranChapters[chapter-1]
+  currentReviews = Review.query.filter_by(chapter=chapter).all()
+  return render_template('vote.html', title="Vote - QRVA", chapter = currentChapter, reviews = currentReviews)
 
 @app.route('/review', methods=["GET", "POST"])
 def review():
   if(request.form):
-    print(request.form)
-    currentReview = Review(reciter = request.form["reciter"],
-    chapter = request.form["chapter"],
-    user = request.form["user"],
-    content = request.form["content"],
-    rating = request.form["rating"])
-    db.session.add(currentReview)
-    db.session.commit()
-    print("Review added!")
-    return redirect(url_for('feed'))
+  print(request.form)
+  currentReview = Review(reciter = request.form["reciter"],
+  chapter = request.form["chapter"],
+  user = request.form["user"],
+  content = request.form["content"],
+  rating = request.form["rating"])
+  db.session.add(currentReview)
+  db.session.commit()
+  print("Review added!")
+  return redirect(url_for('feed'))
   return redirect(url_for('feed'))
 
 @app.route('/user', methods=["POST", "GET"])
   if(request.form):
-    print(request.form)
-    if(request.form["type"] == "create"){
-    }
-    if(request.form["type"] == "update"){
-    }
-    if(request.form["type"] == "delete"){
-    }
+  print(request.form)
+  if(request.form["type"] == "create"){
+  }
+  if(request.form["type"] == "update"){
+  }
+  if(request.form["type"] == "delete"){
+  }
 
 @app.route('/static/<path:path>')
 def sendFiles(path):
-    if(request):
-        print(request.form)
-    return send_from_directory('static/', path)
+  if(request):
+    print(request.form)
+  return send_from_directory('static/', path)
 
 @app.route('/audio/<path:path>')
 def sendAudio(path):
-    if(request):
-        print(request.form)
-    return send_from_directory('static/audio/', path)
+  if(request):
+    print(request.form)
+  return send_from_directory('static/audio/', path)
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    if(request.form):
-        print(request.form)
-        email = request.form['email']
-        password = request.form['password']
-        if current_user.is_authenticated:
-            print(f"User {current_user.email} already authenticated.")
-            return redirect(url_for('feed'))
-        currentUser = User.query.filter_by(email=email).first()
-        if currentUser is None:
-            print('Email not found')
-            return redirect(url_for('feed'))
-        if not currentUser.check_password(password):
-            print('Password incorrect')
-            return redirect(url_for('feed'))
-        login_user(currentUser)
-        print(f'User {currentUser.email} logged in.')
-        return redirect(url_for('feed'))
-    else:
-        return redirect(url_for('feed'))
+  if(request.form):
+    print(request.form)
+    email = request.form['email']
+    password = request.form['password']
+    if current_user.is_authenticated:
+      print(f"User {current_user.email} already authenticated.")
+      return redirect(url_for('feed'))
+    currentUser = User.query.filter_by(email=email).first()
+    if currentUser is None:
+      print('Email not found')
+      return redirect(url_for('feed'))
+    if not currentUser.check_password(password):
+      print('Password incorrect')
+      return redirect(url_for('feed'))
+    login_user(currentUser)
+    print(f'User {currentUser.email} logged in.')
+    return redirect(url_for('feed'))
+  else:
+    return redirect(url_for('feed'))
 
 @app.route('/logout', methods=["GET", "POST"])
 def logout():
-    logout_user()
-    print("Logged out.")
-    return redirect(url_for('feed'))
+  logout_user()
+  print("Logged out.")
+  return redirect(url_for('feed'))
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
-    if(request.form):
-        print(request.form)
-        email = request.form['email']
-        password = generate_password_hash(request.form['password'])
-        permissions = "user"
-        name = "John Doe"
-        user = User(email=email,
-        password=password,
-        permissions=permissions,
-        name=name)
-        db.session.add(user)
-        db.session.commit()
-        print("Database user added!")
-    return redirect(url_for('feed'))
+  if(request.form):
+    print(request.form)
+    email = request.form['email']
+    password = generate_password_hash(request.form['password'])
+    permissions = "user"
+    name = "John Doe"
+    user = User(email=email,
+    password=password,
+    permissions=permissions,
+    name=name)
+    db.session.add(user)
+    db.session.commit()
+    print("Database user added!")
+  return redirect(url_for('feed'))
 
 """
 
 
 if __name__ == "__main__":
-    app.run()
+  app.run()

@@ -5,44 +5,18 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="voteDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Vote
-        </a>
-        <div class="dropdown-menu" aria-labelledby="voteDropdown">
-          <a class="dropdown-item disabled" href="#"><b>Popular Chapters</b></a>
-          <a class="dropdown-item" href="vote/67">Al-Mulk (The Dominion)</a>
-          <a class="dropdown-item" href="vote/78">An-Naba (The Great News)</a>
-          <a class="dropdown-item" href="vote/87">Al-A'la (The Most High)</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#pickModal">Pick A Chapter</a>
-        </div>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('usersList') }}">Edit Users</a>
       </li>
-    </ul>    
-    <ul class="navbar-nav">
-        {% if current_user.is_authenticated %}
-        {% if current_user.permissions == "admin" %}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users') }}">Edit Users</a>
-        </li>
-        {% endif %}
-        {% endif %}
-        {% if not current_user.is_authenticated %}
-        <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#registerModal">Register</a>
-        </li>
-        {% endif %}
-        {% if current_user.is_authenticated %}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-        </li>
-        {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('chaptersList') }}">Edit Chapters</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('recitersList') }}">Edit Reciters</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('votesList') }}">Edit Votes</a>
+      </li>
     </ul>
   </div>
 </nav>
