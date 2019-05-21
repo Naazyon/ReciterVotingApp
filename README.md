@@ -8,7 +8,7 @@ I've used a simple social voting mechanism, using a simple bar graph and poll vo
   
 ## Architecture
 
-'''
+```
 ReciterVotingApp/
 ├── app.db
 ├── config.py
@@ -28,7 +28,7 @@ ReciterVotingApp/
         ├── usersList.html
         ├── votePage.html
         └── votesList.html
-'''
+```
 
 ## describe how to launch the web application.
 ## Include commit logs, showing contributions and review from both contributing students
