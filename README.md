@@ -62,9 +62,11 @@ votesList.html | CRUD list of votes
  2. Clone or unzip the directory to a folder on your computer
  3. cd into the directory `/ReciterVotingApp/` using your terminal
  4. Execute the following steps into your terminal
-	 5. `pip install flask`
-	 6. `pip install flask-login`
-	 7. `pip install flask-sqlalchemy`
-	 8. `pip install flask-migrate`
-4. Set your flask environment using `export FLASK_APP=reciterVotingApp.py` or `set FLASK_APP=reciterVotingApp.py`
-5. Run the app using `flask run`
+ ```
+	pip install flask
+	pip install flask-login
+	pip install flask-sqlalchemy
+	pip install flask-migrate
+```
+5. Set your flask environment using `export FLASK_APP=reciterVotingApp.py` or `set FLASK_APP=reciterVotingApp.py`
+6. Run the app using `flask run`
