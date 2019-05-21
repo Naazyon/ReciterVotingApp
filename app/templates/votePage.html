@@ -23,31 +23,60 @@
                   </audio>
               </td>
               <td class="align-middle">
+              {% if not vote %}
               <button type="button" class="btn btn-info btn-block btn-sm" onclick = "vote({{ reciter.id }}, {{ chapter.id }}, {{ current_user.id }})" ><i class="fas fa-star"></i></button>
+              {% endif %}
+              {% if vote %}
+                Thanks for voting!
+              {% endif %}
               </td>
           </tr>
         {% endfor %}
     </tbody>
 </table>
 
+<br />
+
+<button type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#pickModal">Pick Chapter</button>
+
+<!-- pick chapter modal -->
+<div class="modal fade" id="pickModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      <div class="row text-center no-gutters">
+      <div class="col-sm-8 px-1">
+            <select class="form-control" id="chapSelect">
+                {% for chapter in chapters %}
+                <option value={{chapter.id}}>{{chapter.id}} > {{chapter.name}} ({{chapter.translation}})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-sm-2 px-1">
+            <button type="button" class="btn btn-info btn-block" onclick="getChapter()"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="col-sm-2 px-1">
+            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal"><i class="fa fa-window-close" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 <script type="text/javascript">
-    function vote(reciter, chapterId, userId, upvote) {
-      jQuery.ajax({
-        type: "POST",
-        url: window.location.pathname,
-        data: {reciter: reciter, chapter: chapterId, user:userId, upvote:upvote}
-      });
-      alert("Vote submitted.");
-      document.location.reload();
-    };
-    function submitReview(reciter) {
-      jQuery.ajax({
-        type: "POST",
-        url: "/review",
-        data: {reciter: reciter, chapter: {{chapter.id}}, user:{{current_user.id}}, content: $("#formReviewContent" + reciter).val(), rating: $("#formReviewRating" + reciter).val()}
-      });
-      alert("Review submitted.");
-      document.location.reload();
+    function vote(reciter, chapterId, userId) {
+        jQuery.ajax({
+            type: "POST",
+            url: "/vote",
+            data: {type: "CREATE", reciter: reciter, chapter: chapterId, user:userId}
+        });
+        alert("Vote Submitted");
+        document.location.reload();
+    }
+    function getChapter() {
+      chapter = parseInt($('#chapSelect').val());
+      window.location.href = "/votepage/" + chapter;
     };
 </script>
 

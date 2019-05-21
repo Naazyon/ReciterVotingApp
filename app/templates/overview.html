@@ -5,47 +5,59 @@
 {% block content %}
 
 <div class="py-2 mx-auto text-center">
-  <h1 class="display-4">Overview</h1>
-  <!--p class="lead">Current Votes:</p-->
+  <h1 class="display-4">Quran Recitation Rankings</h1>
+  <p class="lead">Current Standing</p>
 </div>
-<canvas id="canvas"></canvas>
+</div>
+</div>
+<div class="py-1 px-2">
+  <canvas id="reciterCanvas" class="currentStandingChart"></canvas>
+  <br />
+  <canvas id="canvas" class="currentStandingChart"></canvas>
+</div>
 
 <script>
+    
+    var rawData = {{data|tojson}}
+    
+    var colours = ["#d7191c", "#fdae61", "#ffffbf", "#a6d96a", "#1a9641",]
+    var chapterLabels = {{chapterTitles|tojson}}
+    var chapterDatasets = []
+    var reciterLabels = []
+    var reciterData = []
+    var reciterDatasets = []
+    for (i = 0; i < rawData.length; i++) {
+      let chapterData = rawData[i]
+      reciterLabels.push(chapterData[0])
+      reciterData.push(chapterData[1].reduce((a, b) => a + b, 0))
+      chapterDatasets.push({
+        label: chapterData[0],
+        backgroundColor: colours[i],
+        borderColor: colours[i],
+        data: chapterData[1],
+      })
+    }
+    for (i = 0; i < reciterLabels.length; i++) {
+      var currentData = [0,0,0]
+      currentData[i] = reciterData[i]
+      reciterDatasets.push({
+        label: reciterLabels[i],
+        backgroundColor: colours[i],
+        borderColor: colours[i],
+        data: currentData,
+      })
+    }
+    
+    
     var horizontalBarChartData = {
-    labels: ["Yaseen / The Heart" ,"Ar-Rahman (The Most Merciful)" ,"Al-Waaqiah (The Inevitable)" ,"Al-Mulk (The Dominion)" ,"Al-A'la (The Most High)"],
-    datasets: [
-        {
-            label: "As-Sudais",
-            backgroundColor: "#F1406E",
-            borderColor: "#F1406E",
-            data: [Math.random()*4, Math.random()*4, Math.random()*4, Math.random()*4, Math.random()*4]
-        },
-        {
-            label: "Al-Shuraim",
-            backgroundColor: "#FF9E4E",
-            borderColor: "#FF9E4E",
-            data: [Math.random()*4, Math.random()*4, Math.random()*4, Math.random()*4, Math.random()*4]
-        },
-        {
-            label: "Abdul Basit",
-            backgroundColor: "#9A4FC1",
-            borderColor: "#9A4FC1",
-            data: [Math.random()*4, Math.random()*4, Math.random()*4, Math.random()*4, Math.random()*4]
-        },
-        {
-            label: "Mishary Rashid",
-            backgroundColor: "#0088DF",
-            borderColor: "#0088DF",
-            data: [Math.random()*4, Math.random()*4, Math.random()*4, Math.random()*4, Math.random()*4]
-        },
-        {
-            label: "Saad Al-Ghamdi",
-            backgroundColor: "#00998A",
-            borderColor: "#00998A",
-            data: [Math.random()*4, Math.random()*4, Math.random()*4, Math.random()*4, Math.random()*4]
-        }
-    ]
+    labels: chapterLabels,
+    datasets: chapterDatasets
     };
+    
+		var barChartData = {
+			labels: reciterLabels,
+			datasets: reciterDatasets
+		};
     
     function autorun() {
     var ctx = document.getElementById("canvas").getContext("2d");
@@ -59,6 +71,8 @@
                 }
             },
             responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1/2,
             legend: {
                 position: "right"
             },
@@ -68,15 +82,27 @@
             }
         }
     });
+    var ctx2 = document.getElementById('reciterCanvas').getContext('2d');
+			window.myBar = new Chart(ctx2, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+           maintainAspectRatio: true,
+           aspectRatio: 3,
+					title: {
+						display: true,
+						text: 'Ranking of Reciters'
+					},
+        scales: { xAxes: [{ stacked: true }], yAxes: [{ stacked: true }] }
+				}
+			});
     }
-    
     if (document.addEventListener)
     document.addEventListener("DOMContentLoaded", autorun, false);
     else if (document.attachEvent)
     document.attachEvent("onreadystatechange", autorun);
     else window.onload = autorun;
-
-
 </script>
 
 {% endblock %}   
