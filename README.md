@@ -58,13 +58,13 @@ votesList.html | CRUD list of votes
 
 ## How to start the application
 
-0. Ensure at minimum python3.6 is installed on your computer
-1. Clone or unzip the directory to a folder on your computer
-2. cd into the directory `/ReciterVotingApp/` using your terminal
-3. Execute the following steps into your terminal
-    3a. `pip install flask`
-    3b. `pip install flask-login`
-    3c. `pip install flask-sqlalchemy`
-    3d. `pip install flask-migrate`
+ 1. Ensure at minimum python3.6 is installed on your computer
+ 2. Clone or unzip the directory to a folder on your computer
+ 3. cd into the directory `/ReciterVotingApp/` using your terminal
+ 4. Execute the following steps into your terminal
+	 5. `pip install flask`
+	 6. `pip install flask-login`
+	 7. `pip install flask-sqlalchemy`
+	 8. `pip install flask-migrate`
 4. Set your flask environment using `export FLASK_APP=reciterVotingApp.py` or `set FLASK_APP=reciterVotingApp.py`
 5. Run the app using `flask run`
